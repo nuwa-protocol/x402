@@ -1,4 +1,4 @@
-import { createPublicClient, createWalletClient, http, publicActions } from "viem";
+import { createPublicClient, createWalletClient, http, publicActions, defineChain } from "viem";
 import type {
   Chain,
   Transport,
@@ -25,6 +25,33 @@ import {
 } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { Hex } from "viem";
+
+// X-Layer Mainnet Chain Definition
+export const xLayer = defineChain({
+  id: 196,
+  name: "X Layer",
+  nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://rpc.xlayer.tech"] },
+  },
+  blockExplorers: {
+    default: { name: "OKLink", url: "https://www.oklink.com/xlayer" },
+  },
+});
+
+// X-Layer Testnet Chain Definition
+export const xLayerTestnet = defineChain({
+  id: 1952,
+  name: "X Layer Testnet",
+  nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://testrpc.xlayer.tech/terigon"] },
+  },
+  blockExplorers: {
+    default: { name: "OKLink", url: "https://www.oklink.com/xlayer-test" },
+  },
+  testnet: true,
+});
 
 // Create a public client for reading data
 export type SignerWallet<
@@ -211,6 +238,10 @@ export function getChainFromNetwork(network: string | undefined): Chain {
       return iotex;
     case "iotex-testnet":
       return iotexTestnet;
+    case "x-layer":
+      return xLayer;
+    case "x-layer-testnet":
+      return xLayerTestnet;
     default:
       throw new Error(`Unsupported network: ${network}`);
   }
