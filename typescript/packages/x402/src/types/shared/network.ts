@@ -15,6 +15,7 @@ export const NetworkSchema = z.enum([
   "peaq",
   "x-layer",
   "x-layer-testnet",
+  "skale-base-sepolia",
 ]);
 export type Network = z.infer<typeof NetworkSchema>;
 
@@ -32,6 +33,7 @@ export const SupportedEVMNetworks: Network[] = [
   "peaq",
   "x-layer",
   "x-layer-testnet",
+  "skale-base-sepolia",
 ];
 export const EvmNetworkToChainId = new Map<Network, number>([
   ["base-sepolia", 84532],
@@ -46,6 +48,7 @@ export const EvmNetworkToChainId = new Map<Network, number>([
   ["peaq", 3338],
   ["x-layer", 196],
   ["x-layer-testnet", 1952],
+  ["skale-base-sepolia", 324705682],
 ]);
 
 // svm

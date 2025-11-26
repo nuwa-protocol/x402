@@ -53,6 +53,20 @@ export const xLayerTestnet = defineChain({
   testnet: true,
 });
 
+// SKALE Base Sepolia Chain Definition
+export const skaleBaseSepolia = defineChain({
+  id: 324705682,
+  name: "SKALE Base Sepolia",
+  nativeCurrency: { name: "Credits", symbol: "CREDITS", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://base-sepolia-testnet.skalenodes.com/v1/jubilant-horrible-ancha"] },
+  },
+  blockExplorers: {
+    default: { name: "Blockscout", url: "https://base-sepolia-testnet-explorer.skalenodes.com" },
+  },
+  testnet: true,
+});
+
 // Create a public client for reading data
 export type SignerWallet<
   chain extends Chain = Chain,
@@ -242,6 +256,8 @@ export function getChainFromNetwork(network: string | undefined): Chain {
       return xLayer;
     case "x-layer-testnet":
       return xLayerTestnet;
+    case "skale-base-sepolia":
+      return skaleBaseSepolia;
     default:
       throw new Error(`Unsupported network: ${network}`);
   }
