@@ -64,6 +64,16 @@ export const config: Record<string, ChainConfig> = {
     usdcAddress: "0x2e08028E3C4c2356572E096d8EF835cD5C6030bD",
     usdcName: "Bridged USDC (SKALE Bridge)",
   },
+  // BSC Testnet
+  "97": {
+    usdcAddress: "0xdac693b5f14e7ee5923a4830cd2f82ff178f5098",
+    usdcName: "x402 Wrapped USDT",
+  },
+  // BSC Mainnet
+  "56": {
+    usdcAddress: "0x2fDb94bAa9D664a1879BEe1f944F5F5d2dad4451",
+    usdcName: "x402 Wrapped USDT",
+  },
 };
 
 export type ChainConfig = {

@@ -121,18 +121,44 @@ export function findMatchingRoute(
  * @param network - The network to get the default asset for
  * @returns The default asset
  */
+/**
+ * Network-specific overrides for default asset configuration
+ * Use this for networks that have non-standard EIP-712 versions or decimals
+ */
+const NETWORK_OVERRIDES: Partial<Record<Network, {
+  version?: string;
+  decimals?: number;
+}>> = {
+  // BSC uses Wrapped USDT with EIP-712 version "1" instead of "2"
+  // and decimals is 18
+  "bsc-testnet": { version: "1", decimals: 18 },
+  "bsc": { version: "1", decimals: 18 },
+};
+
+/**
+ * Gets the default asset (USDC/stablecoin) for the given network
+ *
+ * @param network - The network to get the default asset for
+ * @returns The default asset with address, decimals, and EIP-712 domain info
+ */
 export function getDefaultAsset(network: Network) {
   const chainId = getNetworkId(network);
   const usdc = getUsdcChainConfigForChain(chainId);
   if (!usdc) {
     throw new Error(`Unable to get default asset on ${network}`);
   }
+  
+  // Apply network-specific overrides if configured
+  const override = NETWORK_OVERRIDES[network];
+  const decimals = override?.decimals ?? 6;
+  const version = override?.version ?? "2";
+  
   return {
     address: usdc.usdcAddress,
-    decimals: 6,
+    decimals,
     eip712: {
       name: usdc.usdcName,
-      version: "2",
+      version,
     },
   };
 }
