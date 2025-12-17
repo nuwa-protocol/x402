@@ -67,6 +67,33 @@ export const skaleBaseSepolia = defineChain({
   testnet: true,
 });
 
+// BSC Testnet Chain Definition
+export const bscTestnet = defineChain({
+  id: 97,
+  name: "BSC Testnet",
+  nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://data-seed-prebsc-1-s1.binance.org:8545"] },
+  },
+  blockExplorers: {
+    default: { name: "BscScan", url: "https://testnet.bscscan.com" },
+  },
+  testnet: true,
+});
+
+// BSC Mainnet Chain Definition
+export const bsc = defineChain({
+  id: 56,
+  name: "BNB Smart Chain",
+  nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://bsc-dataseed1.binance.org"] },
+  },
+  blockExplorers: {
+    default: { name: "BscScan", url: "https://bscscan.com" },
+  },
+});
+
 // Create a public client for reading data
 export type SignerWallet<
   chain extends Chain = Chain,
@@ -258,6 +285,10 @@ export function getChainFromNetwork(network: string | undefined): Chain {
       return xLayerTestnet;
     case "skale-base-sepolia":
       return skaleBaseSepolia;
+    case "bsc-testnet":
+      return bscTestnet;
+    case "bsc":
+      return bsc;
     default:
       throw new Error(`Unsupported network: ${network}`);
   }
